@@ -1,0 +1,57 @@
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+const PatientList = () => {
+    const { state } = useLocation();
+    const patientsData = state;
+    console.log("props[]", patientsData);
+    const [userData, setUserData] = useState(["osama"]);
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('patientData'));
+        console.log("items", items);
+        if (items) {
+            setUserData(items)
+        }
+    }, [])
+    console.log("userData[]", userData);
+    console.log("length", userData.length);
+    if (!userData.length) return
+    return (
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Patient Name
+                        </th>
+                        <th>
+                            Age
+                        </th>
+                        <th>
+                            Disease
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        userData.map((x) => {
+                            console.log("x[]", x);
+                            return (<tr key={x.id}>
+                                <td>{x.name}</td>
+                                <td>{x.age}</td>
+                                <td>{x.disease}</td>
+                            </tr>
+                            )
+                        })
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+export default PatientList;
